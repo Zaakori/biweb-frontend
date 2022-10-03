@@ -34,7 +34,7 @@ class App extends Component {
 	// Details of the uploaded file
 	console.log(this.state.selectedFile);
 
-  let name = this.state.selectedFile.name;
+  let name = String(this.state.selectedFile.name);
 	
 	// Request made to the backend api
 	// Send formData object
@@ -45,27 +45,49 @@ class App extends Component {
 	// File content to be displayed after
 	// file upload is complete
 	fileData = () => {
-    
-	
-	if (this.state.selectedFile) {
-		
-		return (
-		<div>
-			<h2>File Details:</h2>
-			
-<p>File Name: {this.state.selectedFile.name}</p>
 
-			
-<p>File Type: {this.state.selectedFile.type}</p>
+if (this.state.selectedFile) {
 
-			
-<p>
-			Last Modified:{" "}
-			{this.state.selectedFile.lastModifiedDate.toDateString()}
-			</p>
+      let fileType = String(this.state.selectedFile.type);
+      let fileSize = Number(this.state.selectedFile.size);
+      let fileSizeInMB = ((fileSize /1024)/1024).toFixed(3);
 
-		</div>
-		);
+
+     if(fileType !== "text/plain"){
+
+            return (
+              <div>
+                <h2>Please upload a file of type ".txt"!</h2>
+              </div>
+            )
+
+      } else if(fileSizeInMB > 100){
+
+            return (
+              <div>
+                <h2>Your file size is {fileSizeInMB} MB and that exceeded the sizelimit of 100MB! 
+                  Please upload a file up to 100MB in size.
+                </h2>
+              </div>
+            )
+
+      }else {
+
+            return (
+            <div>
+              <h2>File Details: </h2>
+              
+            <p>File Name: {this.state.selectedFile.name}</p>
+              
+            <p>
+              Last Modified:{" "}
+              {this.state.selectedFile.lastModifiedDate.toDateString()}
+              </p>
+
+            </div>
+            );
+      }
+
 	} else {
 		return (
 		<div>
