@@ -6,8 +6,11 @@ class App extends Component {
 
 	state = {
 
-	// Initially, no file is selected
-	selectedFile: null
+	// Initially, nothing is there
+	selectedFile: null,
+  postResponse: null,
+  textId: '',
+  getResponse: null
 	};
 	
 	// On file select (from the pop up)
@@ -29,22 +32,28 @@ class App extends Component {
         
         // Details of the uploaded file
         console.log(this.state.selectedFile);
+        console.log('AM I EVEN HERE?');
 
         
         // Request made to the backend api
         // Send formData object
-        axios.post("http://localhost:8080/api/upload", formData);
+        axios.post("http://localhost:8080/api/upload", formData).then((repos) => {
+          console.log('GOT RESPONSE', repos.data);
+        this.setState({postResponse : repos.data});
+        });
 
-        // my little thingy for checking frontend-bakend connection
-        // let name = String(this.state.selectedFile.name);
-        // axios.get("http://localhost:8080/api/publish?message=hello from React, here is file name: " + name);
+
         };
+
+  getTextId = ()=> {
+          return this.state.textId;
+      } 
 	
 	// File content to be displayed after
 	// file upload is complete
 	fileData = () => {
 
-        if (this.state.selectedFile) {
+        if ((this.state.selectedFile) && (this.state.postResponse === null)) {
 
               let fileType = String(this.state.selectedFile.type);
               let fileSize = Number(this.state.selectedFile.size);
@@ -86,15 +95,62 @@ class App extends Component {
                     );
               }
 
-          } else {
+        } else if((this.state.selectedFile) && (this.state.postResponse) && (this.state.getResponse === null)){
+          console.log('reached this part 1')
+
+          return (
+            <div>
+              <h3>
+                Your ID for the uploaded text is:
+              </h3>
+              <h2>
+                {this.state.postResponse}
+              </h2>
+            </div>
+          );
+
+        } else if((this.state.getResponse)){
+
+          return (
+            <div>
+              <h3>
+                The GET request response is:
+              </h3>
+              <h2>
+                {JSON.stringify(this.state.getResponse)}
+              </h2>
+            </div>
+          );
+
+        } else {
             return (
             <div>
-              <br />
-              <h4>Choose before Pressing the Upload button</h4>
             </div>
             );
-          }
-          };
+        }
+    };   
+
+  showStatusOrTable =() => {
+
+
+    console.log('this is the text from input: ' + this.state.textId);
+
+    axios.get(`http://localhost:8080/api/extract?message=${this.state.textId}`).then((response) => {
+      this.setState({getResponse : response.data});
+    }
+
+    )
+
+  }
+
+  updateInputValue(evt) {
+    const val = evt.target.value;
+    console.log(val);
+    // ...       
+    this.setState({
+      textId: val
+    });
+  }
 	
 	render() {
 	
@@ -110,8 +166,21 @@ class App extends Component {
                 Upload!
                 </button>
               </div>
-            {this.fileData()}
+              <div>
+                  {this.fileData()}  
+                <h2>
+                  Type the ID for your uploaded text here to get the result:
+                </h2>
+                <input type= "text" value={this.state.textId} onChange={evt => this.updateInputValue(evt)} />
+                <button onClick={this.showStatusOrTable} > 
+                Get result!
+                </button>
+              </div>
+
+
+        
             </div>
+            
           );
    }
 }
