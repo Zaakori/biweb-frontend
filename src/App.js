@@ -117,8 +117,7 @@ class App extends Component {
         }
     };   
 
-  sendGetRequest =() => {
-
+  sendTableGetRequest =() => {
 
     console.log('this is the text from input: ' + this.state.textId);
 
@@ -127,6 +126,10 @@ class App extends Component {
     }
 
     )
+
+  }
+
+    sendCloudGetRequest() {
 
   }
 
@@ -146,21 +149,15 @@ class App extends Component {
         <div>
         </div>
         );
-    } else if(this.state.getResponse) {
-
+    } else if(this.state.getResponse){
       return (
         <div>
-          <h3>
-            The GET request response is:
-          </h3>
-          <h2>
-            {JSON.stringify(this.state.getResponse)}
-          </h2>
+          <TableData id = {this.state.textId} />
         </div>
       );
-
     }
   }
+
 
 	
 	render() {
@@ -180,18 +177,23 @@ class App extends Component {
               <div>
                   {this.fileData()}  
                 <h2>
-                  Type the ID for your uploaded text here to get the result:
+                  Type the ID for your uploaded text here to get the result (might take a bit of time):
                 </h2>
                 <input type= "text" value={this.state.textId} onChange={evt => this.updateInputValue(evt)} />
-                <button onClick={this.sendGetRequest} > 
-                Get result!
+                <h2></h2>
+                <button onClick={this.sendTableGetRequest} > 
+                Get result as a table!
+                </button>
+                <h2>
+                </h2>
+                <button onClick={this.sendCloudGetRequest} >
+                  Get result as a word cloud!
                 </button>
               </div>
               <div>
                 {this.showTable()}
               </div>
               <div>
-                <TableData />
               </div>
 
 

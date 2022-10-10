@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './tabledata.css';
  
-export default function TableData() {
+export default function TableData(props) {
 
     const [data, getData] = useState([])
 
-    const URL = 'http://localhost:8080/api/extract?message=355786ce-a16f-4279-901e-a3c7394a093b';
-    //const URL = 'https://jsonplaceholder.typicode.com/posts';
+    const URL = 'http://localhost:8080/api/extract?message=' + props.id;
  
     useEffect(() => {
         fetchData()
@@ -27,7 +26,7 @@ export default function TableData() {
  
     return (
         <>
-            <h1>How to display JSON data to table in React JS</h1>
+        <h2></h2>
             <tbody>
                 <tr>
                     <th>WORD</th>
