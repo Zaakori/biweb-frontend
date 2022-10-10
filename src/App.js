@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React,{Component} from 'react';
 import TableData from './TableData.js';
+import SimpleWordcloud from './ReactWordCloud';
+import ReactWordcloud from 'react-wordcloud';
 
 class App extends Component {
 
@@ -11,6 +13,7 @@ class App extends Component {
   postResponse: null,
   textId: '',
   textForTable: '',
+  textForWordCloud: ''
 	};
 	
 	// On file select (from the pop up)
@@ -127,18 +130,38 @@ class App extends Component {
     let text = String(this.state.textForTable);
 
     if(text === 'true'){
-      return (
-        <div>
-          <TableData id = {this.state.textId} />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-        </div>
+        return (
+          <div>
+            <TableData id = {this.state.textId} />
+          </div>
         );
+    } else {
+        return (
+          <div>
+          </div>
+          );
     }
   }
+
+  showWordCloud() {
+
+    let text = String(this.state.textForWordCloud);
+
+    if(text === 'true'){
+        return (
+          <div>
+            <SimpleWordcloud id = {this.state.textId} />
+          </div>
+        );
+    } else {
+        return (
+          <div>
+          </div>
+          );
+    }
+  }
+
+
 
   toggleTableState(evt) {
     const val = 'true';
@@ -148,6 +171,17 @@ class App extends Component {
       textForTable: val
     });
   }
+
+  toggleWordCloudState(evt) {
+    const val = 'true';
+    console.log(val);
+    // ...       
+    this.setState({
+      textForWordCloud: val
+    });
+  }
+
+
 
 
 	
@@ -177,7 +211,7 @@ class App extends Component {
                 </button>
                 <h2>
                 </h2>
-                <button onClick={this.sendCloudGetRequest} >
+                <button onClick={evt => this.toggleWordCloudState(evt)} >
                   Get result as a word cloud!
                 </button>
               </div>
@@ -185,10 +219,8 @@ class App extends Component {
                 {this.showTable()}
               </div>
               <div>
-              </div>
-
-
-        
+                {this.showWordCloud()}
+              </div>        
             </div>
             
           );
