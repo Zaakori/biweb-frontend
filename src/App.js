@@ -1,6 +1,6 @@
 import axios from 'axios';
-
 import React,{Component} from 'react';
+import TableData from './TableData.js';
 
 class App extends Component {
 
@@ -109,19 +109,6 @@ class App extends Component {
             </div>
           );
 
-        } else if((this.state.getResponse)){
-
-          return (
-            <div>
-              <h3>
-                The GET request response is:
-              </h3>
-              <h2>
-                {JSON.stringify(this.state.getResponse)}
-              </h2>
-            </div>
-          );
-
         } else {
             return (
             <div>
@@ -130,7 +117,7 @@ class App extends Component {
         }
     };   
 
-  showStatusOrTable =() => {
+  sendGetRequest =() => {
 
 
     console.log('this is the text from input: ' + this.state.textId);
@@ -151,6 +138,30 @@ class App extends Component {
       textId: val
     });
   }
+
+  showTable() {
+
+    if(this.state.getResponse === null){
+      return (
+        <div>
+        </div>
+        );
+    } else if(this.state.getResponse) {
+
+      return (
+        <div>
+          <h3>
+            The GET request response is:
+          </h3>
+          <h2>
+            {JSON.stringify(this.state.getResponse)}
+          </h2>
+        </div>
+      );
+
+    }
+  }
+
 	
 	render() {
 	
@@ -172,9 +183,15 @@ class App extends Component {
                   Type the ID for your uploaded text here to get the result:
                 </h2>
                 <input type= "text" value={this.state.textId} onChange={evt => this.updateInputValue(evt)} />
-                <button onClick={this.showStatusOrTable} > 
+                <button onClick={this.sendGetRequest} > 
                 Get result!
                 </button>
+              </div>
+              <div>
+                {this.showTable()}
+              </div>
+              <div>
+                <TableData />
               </div>
 
 
