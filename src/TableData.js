@@ -3,9 +3,11 @@ import './tabledata.css';
  
 export default function TableData(props) {
 
+    console.log(props.id);
+
     const [data, getData] = useState([])
 
-    const URL = 'http://localhost:8080/api/extract?message=' + props.id;
+    const URL = 'http://localhost:8080/api/extractTable?message=' + props.id;
  
     useEffect(() => {
         fetchData()
@@ -27,6 +29,7 @@ export default function TableData(props) {
     return (
         <>
         <h2></h2>
+        <table>
             <tbody>
                 <tr>
                     <th>WORD</th>
@@ -34,11 +37,12 @@ export default function TableData(props) {
                 </tr>
                 {data.map((item, i) => (
                     <tr key={i}>
-                        <td>{item.word}</td>
-                        <td>{item.count}</td>
+                        <td>{item.text}</td>
+                        <td>{item.value}</td>
                     </tr>
                 ))}
             </tbody>
+            </table>
  
         </>
     );

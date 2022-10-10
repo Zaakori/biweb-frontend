@@ -10,7 +10,7 @@ class App extends Component {
 	selectedFile: null,
   postResponse: null,
   textId: '',
-  getResponse: null
+  textForTable: '',
 	};
 	
 	// On file select (from the pop up)
@@ -44,10 +44,6 @@ class App extends Component {
 
 
         };
-
-  getTextId = ()=> {
-          return this.state.textId;
-      } 
 	
 	// File content to be displayed after
 	// file upload is complete
@@ -95,7 +91,7 @@ class App extends Component {
                     );
               }
 
-        } else if((this.state.selectedFile) && (this.state.postResponse) && (this.state.getResponse === null)){
+        } else if((this.state.selectedFile) && (this.state.postResponse)){
           console.log('reached this part 1')
 
           return (
@@ -117,22 +113,6 @@ class App extends Component {
         }
     };   
 
-  sendTableGetRequest =() => {
-
-    console.log('this is the text from input: ' + this.state.textId);
-
-    axios.get(`http://localhost:8080/api/extract?message=${this.state.textId}`).then((response) => {
-      this.setState({getResponse : response.data});
-    }
-
-    )
-
-  }
-
-    sendCloudGetRequest() {
-
-  }
-
   updateInputValue(evt) {
     const val = evt.target.value;
     console.log(val);
@@ -144,18 +124,29 @@ class App extends Component {
 
   showTable() {
 
-    if(this.state.getResponse === null){
-      return (
-        <div>
-        </div>
-        );
-    } else if(this.state.getResponse){
+    let text = String(this.state.textForTable);
+
+    if(text === 'true'){
       return (
         <div>
           <TableData id = {this.state.textId} />
         </div>
       );
+    } else {
+      return (
+        <div>
+        </div>
+        );
     }
+  }
+
+  toggleTableState(evt) {
+    const val = 'true';
+    console.log(val);
+    // ...       
+    this.setState({
+      textForTable: val
+    });
   }
 
 
@@ -179,9 +170,9 @@ class App extends Component {
                 <h2>
                   Type the ID for your uploaded text here to get the result (might take a bit of time):
                 </h2>
-                <input type= "text" value={this.state.textId} onChange={evt => this.updateInputValue(evt)} />
+                <input type= "text" onChange={evt => this.updateInputValue(evt)} />
                 <h2></h2>
-                <button onClick={this.sendTableGetRequest} > 
+                <button onClick={evt => this.toggleTableState(evt)} > 
                 Get result as a table!
                 </button>
                 <h2>
