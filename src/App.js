@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React,{Component} from 'react';
-import TableData from './TableData.js';
-import SimpleWordcloud from './ReactWordCloud';
-import ReactWordcloud from 'react-wordcloud';
+import TableData from './components/TableData.js';
+import SimpleWordcloud from './components/ReactWordCloud';
+import FileData from './components/FileData.js';
 
 class App extends Component {
 
@@ -53,75 +53,7 @@ class App extends Component {
         });
 
 
-        };
-	
-	// File content to be displayed after
-	// file upload is complete
-	fileData = () => {
-
-        if ((this.state.selectedFile) && (this.state.postResponse === null)) {
-
-              let fileType = String(this.state.selectedFile.type);
-              let fileSize = Number(this.state.selectedFile.size);
-              let fileSizeInMB = ((fileSize /1024)/1024).toFixed(3);
-
-
-            if(fileType !== "text/plain"){
-
-                    return (
-                      <div>
-                        <h2>Please upload a file of type ".txt"!</h2>
-                      </div>
-                    )
-
-              } else if(fileSizeInMB > 100){
-
-                    return (
-                      <div>
-                        <h2>Your file size is {fileSizeInMB} MB and that exceeded the sizelimit of 100MB! 
-                          Please upload a file up to 100MB in size.
-                        </h2>
-                      </div>
-                    )
-
-              }else {
-
-                    return (
-                    <div>
-                      <h2>File Details: </h2>
-                      
-                    <p>File Name: {this.state.selectedFile.name}</p>
-                      
-                    <p>
-                      Last Modified:{" "}
-                      {this.state.selectedFile.lastModifiedDate.toDateString()}
-                      </p>
-
-                    </div>
-                    );
-              }
-
-        } else if((this.state.selectedFile) && (this.state.postResponse)){
-          console.log('reached this part 1')
-
-          return (
-            <div>
-              <h3>
-                Your ID for the uploaded text is:
-              </h3>
-              <h2>
-                {this.state.postResponse}
-              </h2>
-            </div>
-          );
-
-        } else {
-            return (
-            <div>
-            </div>
-            );
-        }
-    };   
+        }; 
 
   updateInputValue(evt) {
     const val = evt.target.value;
@@ -211,7 +143,7 @@ class App extends Component {
                 </button>
               </div>
               <div>
-                  {this.fileData()}  
+                <FileData theFile = {this.state.selectedFile} response = {this.state.postResponse}/>
                 <h2>
                   Type the ID for your uploaded text here to get the result (result might take a bit of time):
                 </h2>
