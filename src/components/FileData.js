@@ -1,3 +1,4 @@
+import './componentStyling/filedata.css';
 
 
 export default function	FileData (properties) {
@@ -48,10 +49,10 @@ export default function	FileData (properties) {
 
           return (
             <div>
-              <h3>
-                Your ID for the uploaded text is:
-              </h3>
               <h2>
+                Your ID for the uploaded text is:
+              </h2>
+              <h2 className="custom">
                 {properties.response}
               </h2>
             </div>

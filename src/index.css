@@ -1,11 +1,19 @@
 body {
-  margin: 0;
-  background-color: aqua;
+  margin: 500;
+  background-color: #9dfaae;
+  color: #08751b;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.button {
+  color: white;
+  background-color: #08751b;
+  border-color: #f8ff33;
+  padding: 10px;
 }
 
 code {

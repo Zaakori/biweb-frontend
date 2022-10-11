@@ -1,4 +1,6 @@
 td, th {
     border: 1px solid #ddd;
     padding: 8px;
+    border-color: black;
+    color: black;
   }

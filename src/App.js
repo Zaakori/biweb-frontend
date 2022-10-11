@@ -79,15 +79,19 @@ class App extends Component {
 	render() {
 	
           return (
-            <div>
+            <div style={{
+              marginLeft: 330,
+              justifyContent: 'center',
+              alignItems: 'center'}}>
+
               <h1>
               Text Processing App
               </h1>
-              <p>Upload a .txt file up to 100 MB in size and see how often each word comes up</p>
+              <h2>Upload a .txt file up to 100 MB in size and see how often each word comes up</h2>
               <div>
                 <input type="file" onChange={this.onFileChange} />
-                <button onClick={this.onFileUpload}>
-                Upload!
+                <button onClick={this.onFileUpload} className="button">
+                UPLOAD
                 </button>
               </div>
               <div>
@@ -97,13 +101,13 @@ class App extends Component {
                 </h2>
                 <input type= "text" onChange={evt => this.updateInputValue(evt)} />
                 <h2></h2>
-                <button onClick={evt => this.toggleTableState(evt)} > 
-                Get result as a table!
+                <button onClick={evt => this.toggleTableState(evt)} className="button"> 
+                GET RESULT AS A TABLE
                 </button>
                 <h2>
                 </h2>
-                <button onClick={evt => this.toggleWordCloudState(evt)} >
-                  Get result as a word cloud!
+                <button onClick={evt => this.toggleWordCloudState(evt)} className="button">
+                  GET RESULT AS A WORD CLOUD
                 </button>
               </div>
               <div>

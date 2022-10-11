@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import './tabledata.css';
+import './componentStyling/tabledata.css';
  
 export default function TableData(props) {
 
