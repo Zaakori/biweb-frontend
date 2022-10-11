@@ -1,9 +1,5 @@
 
 
-
-
-	// File content to be displayed after
-	// file upload is complete
 export default function	FileData (properties) {
 
         if ((properties.theFile) && (properties.response === null)) {
@@ -49,7 +45,6 @@ export default function	FileData (properties) {
               }
 
         } else if((properties.theFile) && (properties.response)){
-          console.log('reached this part 1')
 
           return (
             <div>

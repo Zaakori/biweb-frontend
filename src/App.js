@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React,{Component} from 'react';
-import TableData from './components/TableData.js';
-import SimpleWordcloud from './components/ReactWordCloud';
 import FileData from './components/FileData.js';
+import {ShowTable, ShowWordCloud} from './components/ShowResult';
 
 class App extends Component {
 
@@ -15,115 +14,64 @@ class App extends Component {
   textForTable: '',
   textForWordCloud: ''
 	};
+  
 	
-	// On file select (from the pop up)
 	onFileChange = event => {
 
-    const val = '';
+        const val = '';
+    
+        // Update the state and null everything else in case some file has been previously active on the page
+        this.setState({
+          selectedFile: event.target.files[0],
+          postResponse: null,
+          textId: val,
+          textForTable: val,
+          textForWordCloud: val
+          });
+  };
 	
-      // Update the state and null everything else in case some file has been previously active on the page
-      this.setState({
-         selectedFile: event.target.files[0],
-         postResponse: null,
-         textId: val,
-         textForTable: val,
-         textForWordCloud: val
-        });
-      };
-	
-	// On file upload (click the upload button)
 	onFileUpload = () => {
 	
-        // Create an object of formData
         const formData = new FormData();
         
-        // Update the formData object
         formData.append('file', this.state.selectedFile);
         
-        // Details of the uploaded file
         console.log(this.state.selectedFile);
-        console.log('AM I EVEN HERE?');
 
-        
-        // Request made to the backend api
-        // Send formData object
         axios.post("http://localhost:8080/api/upload", formData).then((repos) => {
           console.log('GOT RESPONSE', repos.data);
         this.setState({postResponse : repos.data});
         });
-
-
-        }; 
+  }; 
 
   updateInputValue(evt) {
-    const val = evt.target.value;
-    console.log(val);
-    // ...       
-    this.setState({
-      textId: val
-    });
+        const val = evt.target.value;
+        console.log(val);
+        // ...       
+        this.setState({
+          textId: val
+        });
   }
-
-  showTable() {
-
-    let text = String(this.state.textForTable);
-
-    if(text === 'true'){
-        return (
-          <div>
-            <TableData id = {this.state.textId} />
-          </div>
-        );
-    } else {
-        return (
-          <div>
-          </div>
-          );
-    }
-  }
-
-  showWordCloud() {
-
-    let text = String(this.state.textForWordCloud);
-
-    if(text === 'true'){
-        return (
-          <div>
-            <SimpleWordcloud id = {this.state.textId} />
-          </div>
-        );
-    } else {
-        return (
-          <div>
-          </div>
-          );
-    }
-  }
-
-
 
   toggleTableState(evt) {
-    const trueVal = 'true';
-    const emptyVal = '';
+        const trueVal = 'true';
+        const emptyVal = '';
 
-    this.setState({
-      textForTable: trueVal,
-      textForWordCloud: emptyVal,
-    });
+        this.setState({
+          textForTable: trueVal,
+          textForWordCloud: emptyVal,
+        });
   }
 
   toggleWordCloudState(evt) {
+        const trueVal = 'true';
+        const emptyVal = '';
 
-    const trueVal = 'true';
-    const emptyVal = '';
-
-    this.setState({
-      textForWordCloud: trueVal,
-      textForTable: emptyVal
-    });
-
+        this.setState({
+          textForWordCloud: trueVal,
+          textForTable: emptyVal
+        });
   }
-
 
 
 
@@ -159,10 +107,10 @@ class App extends Component {
                 </button>
               </div>
               <div>
-                {this.showTable()}
+                <ShowTable tableText = {this.state.textForTable} id = {this.state.textId} />
               </div>
               <div>
-                {this.showWordCloud()}
+                <ShowWordCloud wordCloudText = {this.state.textForWordCloud} id = {this.state.textId} />
               </div>        
             </div>
             
