@@ -29,7 +29,7 @@ import ReactWordcloud from 'react-wordcloud';
   const size = [800, 400];
 
   const options = {
-    minFontSize: 40
+    fontSizes: [15,70]
   };
 
 
