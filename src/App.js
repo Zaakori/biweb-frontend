@@ -18,10 +18,17 @@ class App extends Component {
 	
 	// On file select (from the pop up)
 	onFileChange = event => {
+
+    const val = '';
 	
-      // Update the state
-      this.setState({ selectedFile: event.target.files[0] });
-      
+      // Update the state and null everything else in case some file has been previously active on the page
+      this.setState({
+         selectedFile: event.target.files[0],
+         postResponse: null,
+         textId: val,
+         textForTable: val,
+         textForWordCloud: val
+        });
       };
 	
 	// On file upload (click the upload button)
@@ -164,21 +171,25 @@ class App extends Component {
 
 
   toggleTableState(evt) {
-    const val = 'true';
-    console.log(val);
-    // ...       
+    const trueVal = 'true';
+    const emptyVal = '';
+
     this.setState({
-      textForTable: val
+      textForTable: trueVal,
+      textForWordCloud: emptyVal,
     });
   }
 
   toggleWordCloudState(evt) {
-    const val = 'true';
-    console.log(val);
-    // ...       
+
+    const trueVal = 'true';
+    const emptyVal = '';
+
     this.setState({
-      textForWordCloud: val
+      textForWordCloud: trueVal,
+      textForTable: emptyVal
     });
+
   }
 
 
@@ -202,7 +213,7 @@ class App extends Component {
               <div>
                   {this.fileData()}  
                 <h2>
-                  Type the ID for your uploaded text here to get the result (might take a bit of time):
+                  Type the ID for your uploaded text here to get the result (result might take a bit of time):
                 </h2>
                 <input type= "text" onChange={evt => this.updateInputValue(evt)} />
                 <h2></h2>
